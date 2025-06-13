@@ -48,7 +48,10 @@ export default function HomePage() {
           Object.keys(fieldErrors).forEach(field => {
             const fieldErrorArray = fieldErrors[field];
             if (Array.isArray(fieldErrorArray) && fieldErrorArray.length > 0) {
-              newErrors[field] = fieldErrorArray[0];
+              const firstError = fieldErrorArray[0];
+              if (typeof firstError === 'string') {
+                newErrors[field] = firstError;
+              }
             }
           });
         }
@@ -60,7 +63,10 @@ export default function HomePage() {
           Object.keys(fieldErrors).forEach(field => {
             const fieldErrorArray = fieldErrors[field];
             if (Array.isArray(fieldErrorArray) && fieldErrorArray.length > 0) {
-              newErrors[field] = fieldErrorArray[0];
+              const firstError = fieldErrorArray[0];
+              if (typeof firstError === 'string') {
+                newErrors[field] = firstError;
+              }
             }
           });
         }
@@ -77,7 +83,7 @@ export default function HomePage() {
                 errorArray.forEach((err: any) => {
                   if (err.path && Array.isArray(err.path) && err.path.length > 0) {
                     const fieldName = err.path[0];
-                    if (err.message) {
+                    if (typeof fieldName === 'string' && typeof err.message === 'string') {
                       newErrors[fieldName] = err.message;
                     }
                   }
@@ -103,7 +109,7 @@ export default function HomePage() {
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">
-        高みを目指す会の記録
+        高みを目指す者たちの記録簿
       </h1>
 
       {/* 勉強記録入力フォーム */}
