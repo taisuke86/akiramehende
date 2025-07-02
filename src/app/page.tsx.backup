@@ -1,0 +1,164 @@
+// src/app/page.tsx または該当するコンポーネントファイル
+"use client";
+
+import { useState, useEffect } from "react";
+import { api } from "~/utils/api";
+
+export default function HomePage() {
+  const [mounted, setMounted] = useState(false);
+  
+  // マウント状態の管理
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // マウント後のみクエリを実行
+  const { 
+    data: studySessions, 
+    isLoading, 
+    error 
+  } = api.studySessions.getAll.useQuery(undefined, {
+    enabled: mounted, // 重要: マウント後のみ実行
+  });
+
+  // サーバーサイドレンダリング時の表示
+  if (!mounted) {
+    return (
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <h1 className="mb-8 text-center text-3xl font-bold">Study Tracker</h1>
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // クライアントサイドレンダリング後の表示
+  return (
+    <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <h1 className="mb-8 text-center text-3xl font-bold">Study Tracker</h1>
+        
+        {/* 勉強記録フォーム */}
+        <StudySessionForm />
+        
+        {/* 勉強記録一覧 */}
+        <div className="mt-8">
+          <h2 className="mb-4 text-xl font-semibold">勉強記録</h2>
+          
+          {isLoading && (
+            <div className="animate-pulse space-y-2">
+              <div className="h-4 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded"></div>
+            </div>
+          )}
+          
+          {error && (
+            <div className="text-red-500">
+              エラー: {error.message}
+            </div>
+          )}
+          
+          {studySessions && studySessions.length === 0 && (
+            <p className="text-gray-500">まだ勉強記録がありません</p>
+          )}
+          
+          {studySessions && studySessions.map((session) => (
+            <div key={session.id} className="mb-4 p-4 border rounded-lg">
+              <h3 className="font-semibold">{session.subject}</h3>
+              <p className="text-gray-600">{session.duration}分</p>
+              <p className="text-gray-500 text-sm">
+                {new Date(session.date).toLocaleDateString('ja-JP')}
+              </p>
+              {session.memo && (
+                <p className="text-gray-700 text-sm mt-2">{session.memo}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// 勉強記録フォームコンポーネント（既存のものを使用）
+function StudySessionForm() {
+  const [subject, setSubject] = useState("");
+  const [duration, setDuration] = useState("");
+  const [memo, setMemo] = useState("");
+
+  const utils = api.useUtils();
+  const createStudySession = api.studySessions.create.useMutation({
+    onSuccess: () => {
+      // 成功時にキャッシュを更新
+      void utils.studySessions.getAll.invalidate();
+      // フォームをリセット
+      setSubject("");
+      setDuration("");
+      setMemo("");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (subject && duration) {
+      createStudySession.mutate({
+        subject,
+        duration: parseInt(duration),
+        memo: memo || undefined,
+      });
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">科目</label>
+        <input
+          type="text"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="例: 数学"
+          required
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-1">時間（分）</label>
+        <input
+          type="number"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="例: 60"
+          min="1"
+          required
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-1">メモ（任意）</label>
+        <textarea
+          value={memo}
+          onChange={(e) => setMemo(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="感想や気づきなど"
+          rows={3}
+        />
+      </div>
+      
+      <button
+        type="submit"
+        disabled={createStudySession.isPending}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50"
+      >
+        {createStudySession.isPending ? "保存中..." : "記録を保存"}
+      </button>
+    </form>
+  );
+}

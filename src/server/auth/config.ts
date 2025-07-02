@@ -1,8 +1,11 @@
+// src/server/auth/config.ts
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 // import DiscordProvider from "next-auth/providers/discord";
 
 import { db } from "~/server/db";
+import { env } from "~/env";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -31,20 +34,19 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
+  // 認証プロバイダ
   providers: [
-    // DiscordProvider,
-    /**
-     * 一時的に認証プロバイダを無効化
-     * 基本機能完成後にDiscord認証を追加予定
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          scope: "openid email", // profileスコープを除外してプライバシー保護
+        },
+      },
+    }),
   ],
+  // db接続設定
   adapter: PrismaAdapter(db),
   callbacks: {
     session: ({ session, user }) => ({
@@ -55,4 +57,5 @@ export const authConfig = {
       },
     }),
   },
+  secret: env.AUTH_SECRET,
 } satisfies NextAuthConfig;

@@ -1,5 +1,6 @@
 import { postRouter } from "~/server/api/routers/post";
-import { studySessionsRouter } from "~/server/api/routers/studySessions"; 
+import { studySessionsRouter } from "~/server/api/routers/studySessions";
+import { userRouter } from "~/server/api/routers/user";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -9,7 +10,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter, // 既存（サンプル投稿API）
-  studySessions: studySessionsRouter,  // 新規（勉強記録API）
+  studySessions: studySessionsRouter,  // 勉強記録API
+  user: userRouter, // ユーザープロフィールAPI
 });
 
 // export type definition of API
