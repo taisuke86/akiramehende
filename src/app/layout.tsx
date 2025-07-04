@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import Header from "~/components/Header";
+import Footer from "~/components/Footer";
 
 export const metadata: Metadata = {
   title: "Study Tracker",
@@ -23,13 +24,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ja" className={`${geist.variable}`}>
-      <body className="min-h-screen bg-gray-50">
+      <body className="min-h-screen bg-gray-50 flex flex-col">
         <SessionProvider>
           <TRPCReactProvider>
             <Header />
-            <main className="pt-4">
+            <main className="pt-4 flex-1">
               {children}
             </main>
+            <Footer />
           </TRPCReactProvider>
         </SessionProvider>
       </body>

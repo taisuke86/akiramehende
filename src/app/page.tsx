@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
+import { formatDateJST, getCurrentJSTDate } from "~/lib/dateUtils";
 
 // StudySession型定義
 // type StudySession = {
@@ -88,7 +89,7 @@ export default function HomePage() {
                 <h3 className="font-semibold">{session.subject}</h3>
                 <p className="text-gray-600">{session.duration}分</p>
                 <p className="text-gray-500 text-sm">
-                  {new Date(session.date).toLocaleDateString('ja-JP')}
+                  {formatDateJST(session.date)}
                 </p>
                 {session.memo && (
                   <p className="text-gray-700 text-sm mt-2">{session.memo}</p>
@@ -117,6 +118,11 @@ export default function HomePage() {
 function StudySessionForm() {
   const [subject, setSubject] = useState("");
   const [duration, setDuration] = useState("");
+  const [date, setDate] = useState(() => {
+    // 初期値として今日の日付（日本時間）をセット
+    const today = getCurrentJSTDate();
+    return today.toISOString().split('T')[0]; // YYYY-MM-DD形式
+  });
   const [memo, setMemo] = useState("");
 
   const utils = api.useUtils();
@@ -127,6 +133,10 @@ function StudySessionForm() {
       // フォームをリセット
       setSubject("");
       setDuration("");
+      setDate(() => {
+        const today = getCurrentJSTDate();
+        return today.toISOString().split('T')[0];
+      });
       setMemo("");
     },
   });
@@ -134,9 +144,13 @@ function StudySessionForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (subject.length > 0 && duration.length > 0) {
+      // 日付を日本時間として解釈してUTCに変換
+      const jstDate = new Date(date + 'T00:00:00+09:00');
+      
       createStudySession.mutate({
         subject,
         duration: parseInt(duration),
+        date: jstDate,
         memo: memo || undefined,
       });
     }
@@ -165,6 +179,17 @@ function StudySessionForm() {
           className="w-full p-2 border border-gray-300 rounded-md"
           placeholder="例: 60"
           min="1"
+          required
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-1">日付</label>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md"
           required
         />
       </div>
