@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { formatDateJST } from "~/lib/dateUtils";
 import { IPA_EXAMS, getLevelLabel, getLevelColor } from "~/lib/examMaster";
+import StudyChart from "~/components/StudyChart";
 
 export default function ProfilePage() {
   const { status } = useSession();
@@ -20,6 +21,9 @@ export default function ProfilePage() {
   const [examDate, setExamDate] = useState("");
   const [weekdayHours, setWeekdayHours] = useState("");
   const [weekendHours, setWeekendHours] = useState("");
+  
+  // グラフ表示用の状態
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   // ユーザープロフィールを取得
   const { data: profile, isLoading } = api.user.getProfile.useQuery(undefined, {
@@ -44,6 +48,14 @@ export default function ProfilePage() {
   const { data: studyPlan } = api.exam.getStudyPlan.useQuery(undefined, {
     enabled: status === "authenticated" && activeTab === "exam",
   });
+
+  // 年間統計データを取得
+  const { data: yearlyStats } = api.dashboard.getYearlyStats.useQuery(
+    { year: selectedYear },
+    {
+      enabled: status === "authenticated" && activeTab === "dashboard",
+    }
+  );
 
   // プロフィール取得完了時にニックネームをセット
   if ((profile as { nickname?: string })?.nickname && nickname !== (profile as { nickname?: string }).nickname) {
@@ -371,6 +383,40 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </>
+            )}
+
+            {/* 年間統計グラフ */}
+            {yearlyStats && (
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-0">
+                    年間学習統計
+                  </h2>
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      年を選択:
+                    </label>
+                    <select
+                      value={selectedYear}
+                      onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                      className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                    >
+                      {Array.from({ length: 5 }, (_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}年
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+                <StudyChart 
+                  yearlyStats={yearlyStats} 
+                  isDarkMode={typeof window !== 'undefined' && document.documentElement.classList.contains('dark')}
+                />
+              </div>
             )}
           </div>
         )}
