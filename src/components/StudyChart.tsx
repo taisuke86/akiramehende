@@ -266,7 +266,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
 
       {/* 学習時間グラフ */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+        <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">
           月別学習時間
         </h3>
         <div className="h-80">
@@ -276,7 +276,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
 
       {/* 学習回数グラフ */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+        <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">
           月別学習回数
         </h3>
         <div className="h-80">
