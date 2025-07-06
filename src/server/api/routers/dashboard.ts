@@ -150,15 +150,10 @@ export const dashboardRouter = createTRPCRouter({
         });
 
         const thisMonthDuration = thisMonthSessions.reduce((sum, s) => sum + s.duration, 0);
-        const monthlyGoal = 1800; // 30時間 = 1800分
-        const progressPercentage = Math.min(Math.round((thisMonthDuration / monthlyGoal) * 100), 100);
 
         return {
           type: 'monthly' as const,
           thisMonthDuration,
-          monthlyGoal,
-          progressPercentage,
-          remainingDuration: Math.max(monthlyGoal - thisMonthDuration, 0),
           daysInMonth: new Date(thisYear, thisMonth, 0).getDate(),
           currentDay: now.getDate(),
           hasExamSettings: false,

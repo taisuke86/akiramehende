@@ -267,23 +267,18 @@ export default function ProfilePage() {
                   </div>
                 ) : (
                   <div>
-                    <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">今月の学習目標</h2>
+                    <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">今月の学習記録</h2>
                     <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700 dark:text-gray-300">進捗</span>
-                        <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {goalProgress.progressPercentage}%
-                        </span>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                          {goalProgress.thisMonthDuration}分
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">
+                          {Math.floor(goalProgress.thisMonthDuration / 60)}時間{goalProgress.thisMonthDuration % 60}分
+                        </div>
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                        <div 
-                          className="bg-blue-600 h-3 rounded-full transition-all duration-300"
-                          style={{ width: `${goalProgress.progressPercentage}%` }}
-                        ></div>
-                      </div>
-                      <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                        <span>{goalProgress.thisMonthDuration}分 / {goalProgress.monthlyGoal}分</span>
-                        <span>残り{goalProgress.remainingDuration}分</span>
+                      <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+                        IPA試験設定を行うと、目標進捗を表示できます
                       </div>
                     </div>
                   </div>
