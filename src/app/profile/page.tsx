@@ -7,6 +7,7 @@ import { api } from "~/trpc/react";
 import { formatDateJST } from "~/lib/dateUtils";
 import { IPA_EXAMS, getLevelLabel, getLevelColor } from "~/lib/examMaster";
 import StudyChart from "~/components/StudyChart";
+import { useEffect } from "react";
 
 export default function ProfilePage() {
   const { status } = useSession();
@@ -24,6 +25,29 @@ export default function ProfilePage() {
   
   // グラフ表示用の状態
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // ダークモード検出
+  useEffect(() => {
+    const checkDarkMode = () => {
+      if (typeof window !== 'undefined') {
+        setIsDarkMode(document.documentElement.classList.contains('dark'));
+      }
+    };
+    
+    checkDarkMode();
+    
+    // MutationObserverでダークモードの変更を監視
+    const observer = new MutationObserver(checkDarkMode);
+    if (typeof window !== 'undefined') {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+    
+    return () => observer.disconnect();
+  }, []);
 
   // ユーザープロフィールを取得
   const { data: profile, isLoading } = api.user.getProfile.useQuery(undefined, {
@@ -414,7 +438,7 @@ export default function ProfilePage() {
                 </div>
                 <StudyChart 
                   yearlyStats={yearlyStats} 
-                  isDarkMode={typeof window !== 'undefined' && document.documentElement.classList.contains('dark')}
+                  isDarkMode={isDarkMode}
                 />
               </div>
             )}
