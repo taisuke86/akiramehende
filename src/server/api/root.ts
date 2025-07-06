@@ -1,6 +1,9 @@
 import { postRouter } from "~/server/api/routers/post";
 import { studySessionsRouter } from "~/server/api/routers/studySessions";
 import { userRouter } from "~/server/api/routers/user";
+import { adminRouter } from "~/server/api/routers/admin";
+import { dashboardRouter } from "~/server/api/routers/dashboard";
+import { examRouter } from "~/server/api/routers/exam";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -12,6 +15,9 @@ export const appRouter = createTRPCRouter({
   post: postRouter, // 既存（サンプル投稿API）
   studySessions: studySessionsRouter,  // 勉強記録API
   user: userRouter, // ユーザープロフィールAPI
+  admin: adminRouter, // 管理者用API
+  dashboard: dashboardRouter, // ダッシュボード用API
+  exam: examRouter, // IPA試験設定API
 });
 
 // export type definition of API

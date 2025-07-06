@@ -14,6 +14,13 @@ export default function Header() {
     enabled: status === "authenticated",
   });
 
+  // 管理者権限チェック（エラーは無視）
+  const { data: isAdmin } = api.admin.getStats.useQuery(undefined, {
+    enabled: status === "authenticated",
+    retry: false,
+    throwOnError: false,
+  });
+
   // 表示名を決定する関数
   const getDisplayName = () => {
     if (profile?.nickname) return profile.nickname;
@@ -69,8 +76,17 @@ export default function Header() {
                         onClick={() => setShowDropdown(false)}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        プロフィール設定
+                        マイページ
                       </Link>
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setShowDropdown(false)}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t"
+                        >
+                          管理者ダッシュボード
+                        </Link>
+                      )}
                       <button
                         onClick={() => {
                           setShowDropdown(false);

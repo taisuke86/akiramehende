@@ -41,4 +41,30 @@ export const userRouter = createTRPCRouter({
       data: { nickname: null },
     });
   }),
+
+  // アカウントを完全削除
+  deleteAccount: protectedProcedure.mutation(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    
+    // 関連する学習記録を削除
+    await ctx.db.studySession.deleteMany({
+      where: { userId: userId },
+    });
+    
+    // アカウント・セッション関連データを削除
+    await ctx.db.session.deleteMany({
+      where: { userId: userId },
+    });
+    
+    await ctx.db.account.deleteMany({
+      where: { userId: userId },
+    });
+    
+    // 最後にユーザーを削除
+    await ctx.db.user.delete({
+      where: { id: userId },
+    });
+    
+    return { success: true };
+  }),
 });
