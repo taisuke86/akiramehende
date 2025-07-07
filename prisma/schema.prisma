@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"  // SQLiteからPostgreSQLに変更
+    provider = "sqlite"  // 開発環境用にSQLiteに戻す
     url      = env("DATABASE_URL")
 }
 
@@ -29,12 +29,12 @@ model Account {
     type                     String
     provider                 String
     providerAccountId        String
-    refresh_token            String? @db.Text  // PostgreSQL用にコメント解除
-    access_token             String? @db.Text  // PostgreSQL用にコメント解除
+    refresh_token            String?  // SQLite用
+    access_token             String?  // SQLite用
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String? @db.Text  // PostgreSQL用にコメント解除
+    id_token                 String?  // SQLite用
     session_state            String?
     user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     refresh_token_expires_in Int?
