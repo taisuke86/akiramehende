@@ -159,10 +159,10 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           family: 'system-ui, -apple-system, sans-serif',
         },
         callbacks: {
-          title: (context: any) => {
-            return `${context[0].label}`;
+          title: (context: Array<{ label: string }>) => {
+            return `${context[0]?.label ?? ''}`;
           },
-          label: (context: any) => {
+          label: (context: { parsed: { y: number } }) => {
             const value = context.parsed.y;
             return `${value}${isBarChart ? '時間' : '回'}`;
           },
@@ -198,7 +198,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
             family: 'system-ui, -apple-system, sans-serif',
           },
           padding: 12,
-          callback: function(value: any) {
+          callback: function(value: string | number) {
             return isBarChart ? `${value}h` : `${value}回`;
           },
           stepSize: isBarChart ? Math.ceil(Math.max(...durationData) / 5) : Math.ceil(Math.max(...sessionData) / 5),

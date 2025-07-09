@@ -10,8 +10,8 @@ export const dashboardRouter = createTRPCRouter({
     }))
     .query(async ({ ctx, input }) => {
       const now = new Date();
-      const targetYear = input.year || now.getFullYear();
-      const targetMonth = input.month || (now.getMonth() + 1);
+      const targetYear = input.year ?? now.getFullYear();
+      const targetMonth = input.month ?? (now.getMonth() + 1);
       
       // 月の開始日と終了日を計算（JST基準）
       const startDate = new Date(targetYear, targetMonth - 1, 1);
@@ -80,7 +80,7 @@ export const dashboardRouter = createTRPCRouter({
       year: z.number().optional(),
     }))
     .query(async ({ ctx, input }) => {
-      const targetYear = input.year || new Date().getFullYear();
+      const targetYear = input.year ?? new Date().getFullYear();
       
       const startDate = new Date(targetYear, 0, 1);
       const endDate = new Date(targetYear, 11, 31, 23, 59, 59);
@@ -127,7 +127,13 @@ export const dashboardRouter = createTRPCRouter({
       // ユーザーの試験設定を取得
       const user = await ctx.db.user.findUnique({
         where: { id: ctx.session.user.id },
-      }) as any;
+        select: {
+          targetExam: true,
+          examDate: true,
+          weekdayStudyHours: true,
+          weekendStudyHours: true,
+        },
+      });
 
       // IPA試験設定がない場合は従来の月間目標
       if (!user?.targetExam || !user?.examDate) {
@@ -206,7 +212,7 @@ export const dashboardRouter = createTRPCRouter({
       const thisWeekHours = thisWeekMinutes / 60;
 
       // 週間目標計算（平日5日 + 休日2日）
-      const weeklyTargetHours = (user.weekdayStudyHours * 5) + (user.weekendStudyHours * 2);
+      const weeklyTargetHours = ((user.weekdayStudyHours ?? 0) * 5) + ((user.weekendStudyHours ?? 0) * 2);
 
       return {
         type: 'exam' as const,

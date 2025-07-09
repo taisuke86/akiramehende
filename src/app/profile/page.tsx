@@ -88,10 +88,15 @@ export default function ProfilePage() {
 
   // 試験設定の初期化
   if (examSettings && selectedExam === "") {
-    const settings = examSettings as any;
+    const settings = examSettings as {
+      targetExam?: string;
+      examDate?: Date;
+      weekdayStudyHours?: number;
+      weekendStudyHours?: number;
+    };
     setSelectedExam(settings.targetExam ?? "");
     const examDateValue = settings.examDate;
-    setExamDate(examDateValue ? new Date(examDateValue).toISOString().split('T')[0] ?? "" : "");
+    setExamDate(examDateValue ? new Date(examDateValue).toISOString().split('T')[0] : "");
     const weekdayValue = settings.weekdayStudyHours;
     const weekendValue = settings.weekendStudyHours;
     setWeekdayHours(weekdayValue ? String(weekdayValue) : "");

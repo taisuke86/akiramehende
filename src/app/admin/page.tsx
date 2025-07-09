@@ -14,6 +14,21 @@ type User = {
   };
 };
 
+type StudySession = {
+  id: string;
+  subject: string;
+  duration: number;
+  date: Date;
+  memo: string | null;
+};
+
+type UserDetails = {
+  id: string;
+  email: string | null;
+  nickname: string | null;
+  studySessions: StudySession[];
+};
+
 export default function AdminPage() {
   const { status, data: session } = useSession();
   const router = useRouter();
@@ -137,7 +152,7 @@ export default function AdminPage() {
             <div className="p-6">
               {users && users.length > 0 ? (
                 <div className="space-y-4">
-                  {users.map((user: any) => (
+                  {users.map((user: User) => (
                     <div
                       key={user.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
@@ -150,7 +165,7 @@ export default function AdminPage() {
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white">
-                            {user.nickname || user.email || "名前なし"}
+                            {user.nickname ?? user.email ?? "名前なし"}
                           </p>
                           <p className="text-sm text-gray-600 dark:text-gray-300">{user.email}</p>
                           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -194,13 +209,13 @@ export default function AdminPage() {
                     <h3 className="font-medium mb-2 text-gray-900 dark:text-white">基本情報</h3>
                     <p className="text-gray-700 dark:text-gray-300"><strong>ID:</strong> {userDetails.id}</p>
                     <p className="text-gray-700 dark:text-gray-300"><strong>メール:</strong> {userDetails.email}</p>
-                    <p className="text-gray-700 dark:text-gray-300"><strong>ニックネーム:</strong> {userDetails.nickname || "未設定"}</p>
+                    <p className="text-gray-700 dark:text-gray-300"><strong>ニックネーム:</strong> {userDetails.nickname ?? "未設定"}</p>
                   </div>
                   
                   <div>
                     <h3 className="font-medium mb-2 text-gray-900 dark:text-white">学習記録 ({userDetails.studySessions.length}件)</h3>
                     <div className="max-h-64 overflow-y-auto space-y-2">
-                      {userDetails.studySessions.map((session: any) => (
+                      {userDetails.studySessions.map((session: StudySession) => (
                         <div key={session.id} className="p-3 bg-gray-50 dark:bg-gray-700 rounded border dark:border-gray-600">
                           <p className="text-gray-900 dark:text-white"><strong>{session.subject}</strong> - {session.duration}分</p>
                           <p className="text-sm text-gray-600 dark:text-gray-300">

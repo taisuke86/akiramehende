@@ -18,7 +18,7 @@ const adminMiddleware = protectedProcedure.use(async ({ ctx, next }) => {
   
   // デバッグ用ログ（開発環境のみ）
   if (process.env.NODE_ENV === "development") {
-    console.log("Admin check:", { userEmail, adminEmails, isAdmin: adminEmails.includes(userEmail || "") });
+    console.log("Admin check:", { userEmail, adminEmails, isAdmin: adminEmails.includes(userEmail ?? "") });
   }
   
   if (!userEmail || !adminEmails.includes(userEmail)) {
@@ -135,7 +135,7 @@ export const adminRouter = createTRPCRouter({
     return {
       userCount,
       sessionCount,
-      totalDuration: totalDuration._sum.duration || 0,
+      totalDuration: totalDuration._sum.duration ?? 0,
     };
   }),
 });
