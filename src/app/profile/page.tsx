@@ -96,7 +96,7 @@ export default function ProfilePage() {
     };
     setSelectedExam(settings.targetExam ?? "");
     const examDateValue = settings.examDate;
-    setExamDate(examDateValue ? new Date(examDateValue).toISOString().split('T')[0] : "");
+    setExamDate(examDateValue ? new Date(examDateValue).toISOString().split('T')[0] ?? "" : "");
     const weekdayValue = settings.weekdayStudyHours;
     const weekendValue = settings.weekendStudyHours;
     setWeekdayHours(weekdayValue ? String(weekdayValue) : "");
