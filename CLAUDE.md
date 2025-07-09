@@ -2,17 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+# Claude Code Configuration
 ## Conversation GuideLines
-
 - 常に日本語で会話する
 
-## webで利用するツール
+## web検索で利用するツール
 - Web Searchは使わない。
-- gemini-cliをグローバルインストールしていて、webでの検索はgoogle_web_searchを利用する。
+- gemini-cliをグローバルインストールしているので、webでの検索はgoogle_web_searchを利用する。
 - .claude/commands/gemini-search.mdにweb検索について記載しているので確認すること。
 
-## Project Overview
+## 作業中のタイムアウトエラーについて
+- 120秒ではなく、100秒でタイムアウトエラーとしてください。
 
+## 修正の際の注意点
+- 修正を行う際には必ず以下のことに順守してください
+- 修正過程で.claude/settings.jsonのdenyの各コマンドを実行する必要がある場合は、ユーザーに対し適宜指示してください。
+- 該当修正によって他の処理に問題がないか慎重に確認を行って作業を行ってください。
+- 他の動作に関しても修正が必要な場合は既存の期待値の動作が正常に起動するように修正してください。
+
+## Project Overview
 This is a **Study Tracker** application built with the T3 Stack (Next.js 15, TypeScript, tRPC, Prisma, NextAuth.js, Tailwind CSS). It tracks study sessions with optional user authentication via Google OAuth.
 
 ## Development Commands
