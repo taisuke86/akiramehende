@@ -42,6 +42,7 @@ export const authConfig = {
       authorization: {
         params: {
           scope: "openid email", // profileスコープを除外してプライバシー保護
+          prompt: "select_account", // 常にアカウント選択画面を表示
         },
       },
     }),

@@ -35,7 +35,7 @@ export default function SignInPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Study Tracker にログイン
+            あきらめへんで にログイン
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             勉強記録を管理するためにログインしてください
