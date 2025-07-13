@@ -16,10 +16,8 @@ const adminMiddleware = protectedProcedure.use(async ({ ctx, next }) => {
   const adminEmails = env.ADMIN_EMAILS.split(",").map(email => email.trim());
   const userEmail = ctx.session.user.email;
   
-  // デバッグ用ログ（開発環境のみ）
-  if (process.env.NODE_ENV === "development") {
-    console.log("Admin check:", { userEmail, adminEmails, isAdmin: adminEmails.includes(userEmail ?? "") });
-  }
+  // デバッグ用ログ（本番環境でも一時的に有効）
+  console.log("Admin check:", { userEmail, adminEmails, isAdmin: adminEmails.includes(userEmail ?? "") });
   
   if (!userEmail || !adminEmails.includes(userEmail)) {
     throw new TRPCError({ 
