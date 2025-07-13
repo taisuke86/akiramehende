@@ -29,13 +29,13 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* ロゴ・タイトル */}
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-gray-900 hover:text-gray-700">
-              Study Tracker
+            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
+              あきらめへんで
             </Link>
           </div>
 
@@ -43,7 +43,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             {status === "loading" && (
               <div className="animate-pulse">
-                <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
+                <div className="h-8 w-8 bg-gray-200 dark:bg-gray-600 rounded-full"></div>
               </div>
             )}
 
@@ -58,23 +58,23 @@ export default function Header() {
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="text-gray-700">{getDisplayName()}</span>
-                  <svg className="h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <span className="text-gray-700 dark:text-gray-300">{getDisplayName()}</span>
+                  <svg className="h-4 w-4 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
 
                 {showDropdown && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                     <div className="py-1">
-                      <div className="px-4 py-2 text-sm text-gray-700 border-b">
+                      <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">
                         <div className="font-medium">{getDisplayName()}</div>
-                        <div className="text-gray-500">{session.user.email}</div>
+                        <div className="text-gray-500 dark:text-gray-400">{session.user.email}</div>
                       </div>
                       <Link
                         href="/profile"
                         onClick={() => setShowDropdown(false)}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
                       >
                         マイページ
                       </Link>
@@ -82,7 +82,7 @@ export default function Header() {
                         <Link
                           href="/admin"
                           onClick={() => setShowDropdown(false)}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t"
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600"
                         >
                           管理者ダッシュボード
                         </Link>
@@ -92,7 +92,7 @@ export default function Header() {
                           setShowDropdown(false);
                           void signOut();
                         }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
                       >
                         ログアウト
                       </button>
@@ -103,7 +103,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/auth/signin"
-                className="flex items-center space-x-2 text-sm text-gray-700 hover:text-gray-900 border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-50 transition-colors"
+                className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />

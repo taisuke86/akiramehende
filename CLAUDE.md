@@ -21,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 他の動作に関しても修正が必要な場合は既存の期待値の動作が正常に起動するように修正してください。
 
 ## Project Overview
-This is a **Study Tracker** application built with the T3 Stack (Next.js 15, TypeScript, tRPC, Prisma, NextAuth.js, Tailwind CSS). It tracks study sessions with optional user authentication via Google OAuth.
+This is **あきらめへんで** application built with the T3 Stack (Next.js 15, TypeScript, tRPC, Prisma, NextAuth.js, Tailwind CSS). It tracks study sessions with optional user authentication via Google OAuth.
 
 ## Development Commands
 

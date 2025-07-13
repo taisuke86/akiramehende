@@ -1,20 +1,20 @@
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "プライバシーポリシー - Study Tracker",
-  description: "Study Trackerのプライバシーポリシー",
+  title: "プライバシーポリシー - あきらめへんで",
+  description: "あきらめへんでのプライバシーポリシー",
 };
 
 export default function PrivacyPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">Study Tracker プライバシーポリシー</h1>
+      <h1 className="text-3xl font-bold mb-8">あきらめへんで プライバシーポリシー</h1>
       <div className="prose prose-gray max-w-none">
         <p className="text-gray-600 mb-6">最終更新日: 2025年7月2日</p>
         
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. はじめに</h2>
-          <p>Study Tracker（以下「本サービス」）では、ユーザーのプライバシーを重視し、個人情報の適切な保護に努めています。本プライバシーポリシーは、本サービスにおける個人情報の取扱いについて説明します。</p>
+          <p>あきらめへんで（以下「本サービス」）では、ユーザーのプライバシーを重視し、個人情報の適切な保護に努めています。本プライバシーポリシーは、本サービスにおける個人情報の取扱いについて説明します。</p>
         </section>
 
         <section className="mb-8">
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">9. お問い合わせ</h2>
-          <p className="mb-3">個人情報の取扱いに関するお問い合わせは、<a href="https://github.com/taisuke86/study-tracker-app/issues" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHub Issues</a> でお願いします。</p>
+          <p className="mb-3">個人情報の取扱いに関するお問い合わせは、<a href="https://github.com/taisuke86/akiramehende/issues" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHub Issues</a> でお願いします。</p>
         </section>
 
         <section className="mb-8">
@@ -162,7 +162,7 @@ export default function PrivacyPage() {
 
         <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-center text-gray-600 mb-6">
-            <strong>Study Tracker 運営者</strong><br />
+            <strong>あきらめへんで 運営者</strong><br />
             最終更新日: 2025年7月2日
           </p>
           

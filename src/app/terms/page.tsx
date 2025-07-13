@@ -1,21 +1,21 @@
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "利用規約 - Study Tracker",
-  description: "Study Trackerの利用規約",
+  title: "利用規約 - あきらめへんで",
+  description: "あきらめへんでの利用規約",
 };
 
 export default function TermsPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">Study Tracker 利用規約</h1>
+      <h1 className="text-3xl font-bold mb-8">あきらめへんで 利用規約</h1>
       <div className="prose prose-gray max-w-none">
         <p className="text-gray-600 mb-6">最終更新日: 2025年7月2日</p>
         
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">第1条（本規約の適用）</h2>
           <ol className="list-decimal list-inside space-y-2">
-            <li>本規約は、Study Tracker（以下「本サービス」といいます）の利用に関する条件を定めるものです。</li>
+            <li>本規約は、あきらめへんで（以下「本サービス」といいます）の利用に関する条件を定めるものです。</li>
             <li>ユーザーは、本サービスを利用することにより、本規約に同意したものとみなされます。</li>
           </ol>
         </section>
@@ -127,12 +127,12 @@ export default function TermsPage() {
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">第13条（お問い合わせ）</h2>
-          <p>本規約に関するお問い合わせは、本サービス内のお問い合わせフォームまたは<a href="https://github.com/taisuke86/study-tracker-app/issues" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHubリポジトリのIssues</a>にてお願いします。</p>
+          <p>本規約に関するお問い合わせは、本サービス内のお問い合わせフォームまたは<a href="https://github.com/taisuke86/akiramehende/issues" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHubリポジトリのIssues</a>にてお願いします。</p>
         </section>
 
         <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-center text-gray-600">
-            <strong>Study Tracker運営者</strong><br />
+            <strong>あきらめへんで運営者</strong><br />
             最終更新日: 2025年7月2日
           </p>
         </div>

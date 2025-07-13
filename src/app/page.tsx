@@ -19,11 +19,37 @@ import { formatDateJST, getCurrentJSTDate } from "~/lib/dateUtils";
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
+  const [motivationMessage, setMotivationMessage] = useState("");
   const { status } = useSession();
+
+  // 励ましメッセージの配列
+  const messages = [
+    "今日の頑張りを入力してね！",
+    "今日も一歩前進しよう！",
+    "学習記録で成長を実感しよう！",
+    "今日の努力が明日の自信に！",
+    "コツコツ続けることが大切だよ！",
+    "今日はどんなことを学んだ？",
+    "小さな積み重ねが大きな成果に！",
+    "今日の学習をしっかり記録しよう！",
+    "継続は力なり！今日も頑張って！",
+    "毎日の学習が夢への第一歩！",
+    "今日学んだことを記録に残そう！",
+    "努力した時間を大切にしよう！",
+    "Let's record your effort today!",
+    "Every small step counts!"
+  ];
+
+  // ランダムメッセージを選択する関数
+  const getRandomMessage = () => {
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
   
   // マウント状態の管理
   useEffect(() => {
     setMounted(true);
+    // ページアクセス時にランダムメッセージを設定
+    setMotivationMessage(getRandomMessage());
   }, []);
 
   // ログイン時のみクエリを実行
@@ -40,7 +66,7 @@ export default function HomePage() {
     return (
       <div className="container mx-auto p-4">
         <div className="w-full max-w-md mx-auto">
-          <h1 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">Study Tracker</h1>
+          <h1 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">今日の頑張りを入力してね！</h1>
           <div className="animate-pulse">
             <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
             <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
@@ -55,7 +81,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto p-4">
       <div className="w-full max-w-md mx-auto">
-        <h1 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">Study Tracker</h1>
+        <h1 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">{motivationMessage}</h1>
         
         {/* 勉強記録フォーム - ログイン時のみ表示 */}
         {status === "authenticated" && (
