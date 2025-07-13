@@ -41,8 +41,8 @@ export default function HomePage() {
   ];
 
   // ランダムメッセージを選択する関数
-  const getRandomMessage = () => {
-    return messages[Math.floor(Math.random() * messages.length)];
+  const getRandomMessage = (): string => {
+    return messages[Math.floor(Math.random() * messages.length)] ?? "今日の頑張りを入力してね！";
   };
   
   // マウント状態の管理
