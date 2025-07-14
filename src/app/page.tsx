@@ -91,7 +91,7 @@ export default function HomePage() {
         {/* 勉強記録一覧 - ログイン時のみ表示 */}
         {status === "authenticated" && (
           <div className="mt-8">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">勉強記録</h2>
+            <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">学習記録</h2>
             
             {isLoading && (
               <div className="animate-pulse space-y-2">
@@ -107,7 +107,7 @@ export default function HomePage() {
             )}
             
             {studySessions && studySessions.length === 0 && (
-              <p className="text-gray-500 dark:text-gray-400">まだ勉強記録がありません</p>
+              <p className="text-gray-500 dark:text-gray-400">学習の記録がまだありません</p>
             )}
             
             {studySessions?.map((session) => (
@@ -131,8 +131,8 @@ export default function HomePage() {
             <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">勉強記録を始めましょう</h3>
-            <p className="text-gray-500 dark:text-gray-400 mb-4">ログインして勉強時間の<br />記録と管理を開始してください</p>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">学習記録を始めましょう</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">ログインして学習時間の<br />記録と管理を開始してください</p>
           </div>
         )}
       </div>
