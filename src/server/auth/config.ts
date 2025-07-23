@@ -41,7 +41,7 @@ export const authConfig = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: "openid email", // profileスコープを除外してプライバシー保護
+          scope: "openid email", // プライバシー保護のためprofileを削除
           prompt: "select_account", // 常にアカウント選択画面を表示
         },
       },

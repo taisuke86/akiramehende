@@ -12,7 +12,7 @@ import {
   Legend,
   Filler,
 } from 'chart.js';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -51,8 +51,6 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
     Math.round(stat.duration / 60 * 10) / 10  // 小数点1位まで
   );
 
-  // 学習回数データ
-  const sessionData = yearlyStats.monthlyStats.map(stat => stat.sessions);
 
   // より強いコントラストを持つ色設定
   const textColor = isDarkMode ? '#ffffff' : '#1f2937';
@@ -60,7 +58,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
   const tooltipBgColor = isDarkMode ? '#1f2937' : '#ffffff';
   const tooltipBorderColor = isDarkMode ? '#6b7280' : '#d1d5db';
 
-  // 棒グラフ（学習時間）- モダンでクリーンなデザイン
+  // 学習時間の棒グラフのみのシンプルなデータ
   const barChartData = {
     labels: months,
     datasets: [
@@ -72,7 +70,12 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           : 'rgba(99, 102, 241, 0.9)',
         borderColor: 'transparent',
         borderWidth: 0,
-        borderRadius: 12,
+        borderRadius: {
+          topLeft: 12,
+          topRight: 12,
+          bottomLeft: 0,
+          bottomRight: 0,
+        },
         borderSkipped: false,
         hoverBackgroundColor: isDarkMode 
           ? 'rgba(129, 140, 248, 0.9)'
@@ -83,31 +86,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
     ],
   };
 
-  // 折れ線グラフ（学習回数）- シンプルで一貫した色使い
-  const lineChartData = {
-    labels: months,
-    datasets: [
-      {
-        label: '学習回数（回）',
-        data: sessionData,
-        borderColor: isDarkMode ? 'rgba(34, 197, 94, 1)' : 'rgba(34, 197, 94, 1)',
-        backgroundColor: isDarkMode ? 'rgba(34, 197, 94, 0.1)' : 'rgba(34, 197, 94, 0.05)',
-        borderWidth: 4,
-        fill: 'start',
-        tension: 0.4,
-        pointBackgroundColor: isDarkMode ? 'rgba(34, 197, 94, 1)' : 'rgba(34, 197, 94, 1)',
-        pointBorderColor: isDarkMode ? '#1f2937' : '#ffffff',
-        pointBorderWidth: 3,
-        pointRadius: 0,
-        pointHoverRadius: 8,
-        pointHoverBackgroundColor: isDarkMode ? 'rgba(74, 222, 128, 1)' : 'rgba(21, 128, 61, 1)',
-        pointHoverBorderColor: isDarkMode ? '#1f2937' : '#ffffff',
-        pointHoverBorderWidth: 3,
-      },
-    ],
-  };
-
-  const getChartOptions = (isBarChart = false) => ({
+  const getBarChartOptions = () => ({
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -135,9 +114,9 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           },
           padding: 24,
           usePointStyle: true,
-          pointStyle: isBarChart ? 'rect' : 'circle',
-          boxWidth: isBarChart ? 12 : 8,
-          boxHeight: isBarChart ? 12 : 8,
+          pointStyle: 'rect',
+          boxWidth: 12,
+          boxHeight: 12,
         },
       },
       tooltip: {
@@ -164,7 +143,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           },
           label: (context: { parsed: { y: number } }) => {
             const value = context.parsed.y;
-            return `${value}${isBarChart ? '時間' : '回'}`;
+            return `${value}時間`;
           },
         },
       },
@@ -199,9 +178,9 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           },
           padding: 12,
           callback: function(value: string | number) {
-            return isBarChart ? `${value}h` : `${value}回`;
+            return `${value}h`;
           },
-          stepSize: isBarChart ? Math.ceil(Math.max(...durationData) / 5) : Math.ceil(Math.max(...sessionData) / 5),
+          stepSize: Math.ceil(Math.max(...durationData) / 5),
         },
         grid: {
           color: gridColor,
@@ -221,13 +200,6 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
     elements: {
       bar: {
         borderWidth: 0,
-      },
-      line: {
-        borderJoinStyle: 'round' as const,
-        borderCapStyle: 'round' as const,
-      },
-      point: {
-        hoverBorderWidth: 3,
       },
     },
   });
@@ -270,17 +242,7 @@ export default function StudyChart({ yearlyStats, isDarkMode = false }: StudyCha
           月別学習時間
         </h3>
         <div className="h-80">
-          <Bar data={barChartData} options={getChartOptions(true)} />
-        </div>
-      </div>
-
-      {/* 学習回数グラフ */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">
-          月別学習回数
-        </h3>
-        <div className="h-80">
-          <Line data={lineChartData} options={getChartOptions(false)} />
+          <Bar data={barChartData} options={getBarChartOptions()} />
         </div>
       </div>
     </div>

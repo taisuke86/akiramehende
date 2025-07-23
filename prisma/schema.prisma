@@ -53,10 +53,8 @@ model Session {
 
 model User {
     id                 String          @id @default(cuid())
-    name               String?         // NextAuth.js互換性のため保持（使用しない）
     email              String?         @unique
     emailVerified      DateTime?
-    image              String?         // NextAuth.js互換性のため保持（使用しない）
     nickname           String?         // ユーザー設定可能なニックネーム
     // IPA試験関連設定
     targetExam         String?         // 目標試験コード（IP, FE, AP, etc.）

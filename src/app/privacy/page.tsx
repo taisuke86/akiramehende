@@ -7,10 +7,10 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">あきらめへんで プライバシーポリシー</h1>
-      <div className="prose prose-gray max-w-none">
-        <p className="text-gray-600 mb-6">最終更新日: 2025年7月2日</p>
+    <div className="container mx-auto px-4 py-8 max-w-4xl bg-white dark:bg-gray-900 min-h-screen">
+      <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">あきらめへんで プライバシーポリシー</h1>
+      <div className="prose prose-gray dark:prose-invert max-w-none">
+        <p className="text-gray-600 dark:text-gray-400 mb-6">最終更新日: 2025年7月2日</p>
         
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. はじめに</h2>
@@ -29,14 +29,6 @@ export default function PrivacyPage() {
             <li>Google アカウント ID（内部識別子）</li>
           </ul>
           
-          <p className="mb-2"><strong>取得するが使用しない情報：</strong></p>
-          <ul className="list-disc list-inside mb-4 space-y-1">
-            <li>氏名（NextAuth.js要件のため取得、使用せず）</li>
-            <li>プロフィール画像（NextAuth.js要件のため取得、使用せず）</li>
-          </ul>
-          <p className="text-sm text-gray-600 mb-4">
-            ※ 氏名・画像は認証ライブラリの仕様上取得されますが、アプリ内では使用していません。
-          </p>
 
           <h3 className="text-xl font-semibold mb-3">2.2 学習データ</h3>
           <p className="mb-3">ユーザーが入力する以下の学習関連情報：</p>
@@ -160,19 +152,19 @@ export default function PrivacyPage() {
           <p>本プライバシーポリシーは、日本法に準拠します。</p>
         </section>
 
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <p className="text-center text-gray-600 mb-6">
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-6">
             <strong>あきらめへんで 運営者</strong><br />
             最終更新日: 2025年7月2日
           </p>
           
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-3">参考情報</h3>
-            <p className="text-sm text-gray-600 mb-2">本サービスで使用している第三者サービスのプライバシーポリシー：</p>
+          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="font-semibold mb-3 text-gray-900 dark:text-white">参考情報</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">本サービスで使用している第三者サービスのプライバシーポリシー：</p>
             <ul className="text-sm space-y-1">
-              <li>• <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google プライバシーポリシー</a></li>
-              <li>• <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Supabase プライバシーポリシー</a></li>
-              <li>• <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Vercel プライバシーポリシー</a></li>
+              <li>• <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Google プライバシーポリシー</a></li>
+              <li>• <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Supabase プライバシーポリシー</a></li>
+              <li>• <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Vercel プライバシーポリシー</a></li>
             </ul>
           </div>
         </div>

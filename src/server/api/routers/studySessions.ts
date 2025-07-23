@@ -32,7 +32,31 @@ export const studySessionsRouter = createTRPCRouter({
         });
     }),
 
-  // 勉強記録を削除 - ログインユーザーの記録のみ
+  // 学習記録を更新 - ログインユーザーの記録のみ
+    update: protectedProcedure
+    .input(z.object({
+        id: z.string(),
+        subject: z.string().trim().min(1, "科目名は必須です"),
+        duration: z.number().min(1, "勉強時間は1分以上である必要があります"),
+        date: z.date().optional(),
+        memo: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+        return await ctx.db.studySession.update({
+            where: { 
+                id: input.id,
+                userId: ctx.session.user.id, // ログインユーザーの記録のみ更新可能
+            },
+            data: {
+                subject: input.subject,
+                duration: input.duration,
+                date: input.date,
+                memo: input.memo,
+            },
+        });
+    }),
+
+  // 学習記録を削除 - ログインユーザーの記録のみ
     delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {

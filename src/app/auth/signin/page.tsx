@@ -2,11 +2,13 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function SignInPage() {
   const { status } = useSession();
   const router = useRouter();
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -31,22 +33,67 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="max-w-md w-full space-y-4 sm:space-y-8 border-0">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900 dark:text-white">
             あきらめへんで にログイン
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            勉強記録を管理するためにログインしてください
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
+            学習記録を管理するためにログインしてください
           </p>
         </div>
         
         <div className="mt-8 space-y-6">
+          {/* 利用規約・プライバシーポリシー同意 */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-center">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms-agreement"
+                    name="terms-agreement"
+                    type="checkbox"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="terms-agreement" className="text-gray-700 dark:text-gray-300">
+                    <Link 
+                      href="/terms" 
+                      className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      利用規約
+                    </Link>
+                    および
+                    <Link 
+                      href="/privacy" 
+                      className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      プライバシーポリシー
+                    </Link>
+                    に同意します
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center">
             <button
               onClick={() => signIn("google", { callbackUrl: "/" })}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              disabled={!agreedToTerms}
+              className={`group relative w-80 mx-auto flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-200 ${
+                agreedToTerms 
+                  ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" 
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path
@@ -68,12 +115,18 @@ export default function SignInPage() {
               </svg>
               Googleでログイン
             </button>
+            
+            {!agreedToTerms && (
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                ログインするには利用規約とプライバシーポリシーに同意してください
+              </p>
+            )}
           </div>
           
           <div className="text-center">
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-gray-500 hover:text-gray-700 underline"
+              className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline"
             >
               ホームに戻る
             </button>

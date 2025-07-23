@@ -53,3 +53,25 @@ export function convertJSTDateToUTC(dateString: string): Date {
   const jstDate = new Date(dateString + 'T00:00:00+09:00');
   return jstDate;
 }
+
+/**
+ * UTCの日付を日本時間でのYYYY-MM-DD形式の文字列に変換（input[type="date"]用）
+ */
+export function formatDateForInput(date: Date | string): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  
+  // 日本時間でのYYYY-MM-DD形式を取得
+  const jstFormatter = new Intl.DateTimeFormat('ja-JP', {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  
+  const parts = jstFormatter.formatToParts(dateObj);
+  const year = parts.find(part => part.type === 'year')?.value;
+  const month = parts.find(part => part.type === 'month')?.value;
+  const day = parts.find(part => part.type === 'day')?.value;
+  
+  return `${year}-${month}-${day}`;
+}

@@ -24,8 +24,17 @@ export default function Header() {
   // 表示名を決定する関数
   const getDisplayName = () => {
     if (profile?.nickname) return profile.nickname;
-    if (session?.user?.name) return session.user.name;
     return session?.user?.email ?? "";
+  };
+
+
+  // スマホ用短縮表示関数
+  const getShortDisplayName = () => {
+    const name = getDisplayName();
+    if (name.length > 8) {
+      return name.substring(0, 8) + '...';
+    }
+    return name;
   };
 
   return (
@@ -53,23 +62,23 @@ export default function Header() {
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
-                  <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
-                    <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                    {getDisplayName().charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-gray-700 dark:text-gray-300">{getDisplayName()}</span>
+                  {/* スマホ表示 */}
+                  <span className="text-gray-700 dark:text-gray-300 block sm:hidden">{getShortDisplayName()}</span>
+                  {/* PC表示 */}
+                  <span className="text-gray-700 dark:text-gray-300 hidden sm:block">{getDisplayName()}</span>
                   <svg className="h-4 w-4 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
 
                 {showDropdown && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                  <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                     <div className="py-1">
                       <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">
-                        <div className="font-medium">{getDisplayName()}</div>
-                        <div className="text-gray-500 dark:text-gray-400">{session.user.email}</div>
+                        <div className="font-medium text-center">{getDisplayName()}</div>
                       </div>
                       <Link
                         href="/profile"
