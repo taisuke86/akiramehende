@@ -8,9 +8,7 @@ export const userRouter = createTRPCRouter({
       where: { id: ctx.session.user.id },
       select: {
         id: true,
-        name: true,     // NextAuth.js互換性（表示には使用しない）
         email: true,
-        image: true,    // NextAuth.js互換性（表示には使用しない）
         nickname: true,
       },
     });
