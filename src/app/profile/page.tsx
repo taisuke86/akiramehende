@@ -276,7 +276,7 @@ export default function ProfilePage() {
                           </div>
                           <div className="text-center">
                             <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                              {goalProgress.progressPercentage}%
+                              {goalProgress.progressPercentage.toFixed(1)}%
                             </div>
                             <div className="text-sm text-gray-600 dark:text-gray-400">進捗</div>
                           </div>
@@ -566,7 +566,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
                         <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                          {studyPlan.progressPercentage?.toFixed(0) ?? "0"}%
+                          {studyPlan.progressPercentage?.toFixed(1) ?? "0.0"}%
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">進捗</div>
                       </div>

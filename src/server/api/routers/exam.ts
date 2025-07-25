@@ -131,13 +131,10 @@ export const examRouter = createTRPCRouter({
       ? totalAvailableHours / weeks 
       : totalAvailableHours;
 
-    // 既存の学習時間を取得
+    // 既存の学習時間を取得（全期間）
     const existingSessions = await ctx.db.studySession.findMany({
       where: {
         userId: ctx.session.user.id,
-        date: {
-          gte: today,
-        },
       },
       select: {
         duration: true,

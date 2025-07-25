@@ -191,7 +191,7 @@ export const dashboardRouter = createTRPCRouter({
       const totalStudiedMinutes = allSessions.reduce((sum, s) => sum + s.duration, 0);
       const totalStudiedHours = totalStudiedMinutes / 60;
       const targetHours = examInfo.recommendedHours;
-      const progressPercentage = Math.min(Math.round((totalStudiedHours / targetHours) * 100), 100);
+      const progressPercentage = Math.min((totalStudiedHours / targetHours) * 100, 100);
       const remainingHours = Math.max(targetHours - totalStudiedHours, 0);
 
       // 今週の学習記録
@@ -226,7 +226,7 @@ export const dashboardRouter = createTRPCRouter({
         remainingHours,
         thisWeekHours,
         weeklyTargetHours,
-        weeklyProgressPercentage: Math.min(Math.round((thisWeekHours / weeklyTargetHours) * 100), 100),
+        weeklyProgressPercentage: Math.min((thisWeekHours / weeklyTargetHours) * 100, 100),
         weekdayStudyHours: user.weekdayStudyHours,
         weekendStudyHours: user.weekendStudyHours,
         hasExamSettings: true,
